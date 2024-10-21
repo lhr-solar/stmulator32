@@ -1,6 +1,6 @@
 #include "utils.hpp"
 
 int main() {
-    println("Hello world!");
+    println("Initializing STMulator...");
     return 0;
 }

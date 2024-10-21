@@ -11,4 +11,4 @@ Pronounced "Stimulator" for STM-Simulator. Being developed for e-team purposes i
 - [ ] Unit testing
 
 # How to use
-TBD
+To build, run ``maker build``. To execute, run ``maker run``. Requirements can be installed with ``./requirements.sh``.
