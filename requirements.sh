@@ -8,17 +8,13 @@ check_installed() {
     dpkg -l | grep -q "^ii  $1" && echo "$1 is installed." || echo "$1 is NOT installed."
 }
 
-# Check for g++
-echo "Checking for g++..."
+# Check deps
+echo "Checking dependencies..."
 check_installed g++
-
-# Check for CMake
-echo "Checking for CMake..."
 check_installed cmake
-
-# Check for Make
-echo "Checking for Make..."
 check_installed make
+check_installed libcapstone4 # at least on my machine...
+check_installed libcapstone-dev
 
 # Install missing packages
 missing_packages=()
@@ -33,6 +29,14 @@ fi
 
 if ! dpkg -l | grep -q "^ii  make"; then
     missing_packages+=("make")
+fi
+
+if ! dpkg -l | grep -q "^ii  libcapstone"; then
+    missing_packages+=("libcapstone4")
+fi
+
+if ! dpkg -l | grep -q "^ii  libcapstone-dev"; then
+    missing_packages+=("libcapstone-dev")
 fi
 
 if [ ${#missing_packages[@]} -eq 0 ]; then
