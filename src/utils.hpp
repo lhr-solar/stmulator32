@@ -6,7 +6,7 @@
 
 #define println(x, ...)  \
     {   \
-    printf((x), ##__VA_ARGS__);   \
+    printf(x, ##__VA_ARGS__);   \
     printf("\n");   \
     }   \
 

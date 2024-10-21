@@ -57,10 +57,10 @@ RM = /usr/bin/cmake -E rm -f
 EQUALS = =
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = /root/stmulator32/build
+CMAKE_SOURCE_DIR = /root/stmulator32/dir_build
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = /root/stmulator32/build
+CMAKE_BINARY_DIR = /root/stmulator32
 
 #=============================================================================
 # Targets provided globally by CMake.
@@ -87,9 +87,9 @@ rebuild_cache/fast: rebuild_cache
 
 # The main all target
 all: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /root/stmulator32/build/CMakeFiles /root/stmulator32/build//CMakeFiles/progress.marks
+	$(CMAKE_COMMAND) -E cmake_progress_start /root/stmulator32/CMakeFiles /root/stmulator32//CMakeFiles/progress.marks
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 all
-	$(CMAKE_COMMAND) -E cmake_progress_start /root/stmulator32/build/CMakeFiles 0
+	$(CMAKE_COMMAND) -E cmake_progress_start /root/stmulator32/CMakeFiles 0
 .PHONY : all
 
 # The main clean target
@@ -129,29 +129,53 @@ stmulator/fast:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/stmulator.dir/build.make CMakeFiles/stmulator.dir/build
 .PHONY : stmulator/fast
 
-root/stmulator32/src/launcher.o: root/stmulator32/src/launcher.cpp.o
-.PHONY : root/stmulator32/src/launcher.o
+src/launcher.o: src/launcher.cpp.o
+.PHONY : src/launcher.o
 
 # target to build an object file
-root/stmulator32/src/launcher.cpp.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/stmulator.dir/build.make CMakeFiles/stmulator.dir/root/stmulator32/src/launcher.cpp.o
-.PHONY : root/stmulator32/src/launcher.cpp.o
+src/launcher.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/stmulator.dir/build.make CMakeFiles/stmulator.dir/src/launcher.cpp.o
+.PHONY : src/launcher.cpp.o
 
-root/stmulator32/src/launcher.i: root/stmulator32/src/launcher.cpp.i
-.PHONY : root/stmulator32/src/launcher.i
+src/launcher.i: src/launcher.cpp.i
+.PHONY : src/launcher.i
 
 # target to preprocess a source file
-root/stmulator32/src/launcher.cpp.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/stmulator.dir/build.make CMakeFiles/stmulator.dir/root/stmulator32/src/launcher.cpp.i
-.PHONY : root/stmulator32/src/launcher.cpp.i
+src/launcher.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/stmulator.dir/build.make CMakeFiles/stmulator.dir/src/launcher.cpp.i
+.PHONY : src/launcher.cpp.i
 
-root/stmulator32/src/launcher.s: root/stmulator32/src/launcher.cpp.s
-.PHONY : root/stmulator32/src/launcher.s
+src/launcher.s: src/launcher.cpp.s
+.PHONY : src/launcher.s
 
 # target to generate assembly for a file
-root/stmulator32/src/launcher.cpp.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/stmulator.dir/build.make CMakeFiles/stmulator.dir/root/stmulator32/src/launcher.cpp.s
-.PHONY : root/stmulator32/src/launcher.cpp.s
+src/launcher.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/stmulator.dir/build.make CMakeFiles/stmulator.dir/src/launcher.cpp.s
+.PHONY : src/launcher.cpp.s
+
+src/loader/binary.o: src/loader/binary.cpp.o
+.PHONY : src/loader/binary.o
+
+# target to build an object file
+src/loader/binary.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/stmulator.dir/build.make CMakeFiles/stmulator.dir/src/loader/binary.cpp.o
+.PHONY : src/loader/binary.cpp.o
+
+src/loader/binary.i: src/loader/binary.cpp.i
+.PHONY : src/loader/binary.i
+
+# target to preprocess a source file
+src/loader/binary.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/stmulator.dir/build.make CMakeFiles/stmulator.dir/src/loader/binary.cpp.i
+.PHONY : src/loader/binary.cpp.i
+
+src/loader/binary.s: src/loader/binary.cpp.s
+.PHONY : src/loader/binary.s
+
+# target to generate assembly for a file
+src/loader/binary.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/stmulator.dir/build.make CMakeFiles/stmulator.dir/src/loader/binary.cpp.s
+.PHONY : src/loader/binary.cpp.s
 
 # Help Target
 help:
@@ -162,9 +186,12 @@ help:
 	@echo "... edit_cache"
 	@echo "... rebuild_cache"
 	@echo "... stmulator"
-	@echo "... root/stmulator32/src/launcher.o"
-	@echo "... root/stmulator32/src/launcher.i"
-	@echo "... root/stmulator32/src/launcher.s"
+	@echo "... src/launcher.o"
+	@echo "... src/launcher.i"
+	@echo "... src/launcher.s"
+	@echo "... src/loader/binary.o"
+	@echo "... src/loader/binary.i"
+	@echo "... src/loader/binary.s"
 .PHONY : help
 
 

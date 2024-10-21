@@ -1,0 +1,5 @@
+#!/bin/bash
+cd output
+cmake .
+make
+cd ../

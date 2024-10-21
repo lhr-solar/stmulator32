@@ -12,7 +12,9 @@ set(SRC_DIR "../src")
 # Recursively find all .cpp files in src/ and its subdirectories
 file(GLOB_RECURSE SRC_FILES "${SRC_DIR}/*.cpp")
 
-set (CMAKE_SHARED_LINKER_FLAGS "-Wl,-lcapstone,-lmath,-lstdc++")
+set (CMAKE_SHARED_LINKER_FLAGS "-Wl,-lcapstone,-fsanitize=address")
+
+set(CMAKE_BUILD_TYPE Debug)
 
 # Add executable target from the source files
 add_executable(${PROJECT_NAME} ${SRC_FILES})

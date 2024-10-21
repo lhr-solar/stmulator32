@@ -1,0 +1,1 @@
+/usr/bin/c++ -g CMakeFiles/stmulator.dir/root/stmulator32/src/launcher.cpp.o CMakeFiles/stmulator.dir/root/stmulator32/src/loader/binary.cpp.o -o stmulator 
