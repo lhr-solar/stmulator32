@@ -1,1 +1,1 @@
-/usr/bin/c++ -g CMakeFiles/stmulator.dir/root/stmulator32/src/launcher.cpp.o CMakeFiles/stmulator.dir/root/stmulator32/src/loader/binary.cpp.o -o stmulator  /usr/lib/x86_64-linux-gnu/libcapstone.so 
+/usr/bin/c++ -g CMakeFiles/stmulator.dir/root/stmulator32/src/launcher.cpp.o CMakeFiles/stmulator.dir/root/stmulator32/src/loader/binary.cpp.o -o stmulator 

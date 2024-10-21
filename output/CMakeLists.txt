@@ -14,9 +14,5 @@ file(GLOB_RECURSE SRC_FILES "${SRC_DIR}/*.cpp")
 
 set(CMAKE_BUILD_TYPE Debug)
 
-find_library(caplib "../libcapstone.so")
-
 # Add executable target from the source files
 add_executable(${PROJECT_NAME} ${SRC_FILES})
-
-target_link_libraries(${PROJECT_NAME} PRIVATE "${caplib}")

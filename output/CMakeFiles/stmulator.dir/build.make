@@ -108,7 +108,6 @@ stmulator_EXTERNAL_OBJECTS =
 stmulator: CMakeFiles/stmulator.dir/root/stmulator32/src/launcher.cpp.o
 stmulator: CMakeFiles/stmulator.dir/root/stmulator32/src/loader/binary.cpp.o
 stmulator: CMakeFiles/stmulator.dir/build.make
-stmulator: /usr/lib/x86_64-linux-gnu/libcapstone.so
 stmulator: CMakeFiles/stmulator.dir/link.txt
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=/root/stmulator32/output/CMakeFiles --progress-num=$(CMAKE_PROGRESS_3) "Linking CXX executable stmulator"
 	$(CMAKE_COMMAND) -E cmake_link_script CMakeFiles/stmulator.dir/link.txt --verbose=$(VERBOSE)

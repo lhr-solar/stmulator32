@@ -1,5 +1,6 @@
 #!/bin/bash
 cd output
+make clean
 cmake .
-make
+make -j32
 cd ../
