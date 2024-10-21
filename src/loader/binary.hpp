@@ -10,11 +10,8 @@ class Binary {
 
 private:
     FILE* file; // file ptr
-    Elf32_Ehdr* header;
     std::string name; // elf name
     uint8_t* mapped_ptr; // mmap location of entire file
-    uint8_t* code_ptr;
-    uint32_t code_size;
     uint32_t size; // filesize
 
     std::vector<Elf32_Shdr*> shdrs;
@@ -25,6 +22,10 @@ private:
     void loadSections();
 
 public:
+    uint8_t* code_ptr;
+    uint32_t code_size;
+    Elf32_Ehdr* header;
+    
     Binary(std::string path);
     ~Binary() { fclose(file); munmap(mapped_ptr, size); }
 };

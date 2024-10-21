@@ -12,13 +12,11 @@ set(SRC_DIR "../src")
 # Recursively find all .cpp files in src/ and its subdirectories
 file(GLOB_RECURSE SRC_FILES "${SRC_DIR}/*.cpp")
 
-set (CMAKE_SHARED_LINKER_FLAGS "-Wl,-lcapstone,-fsanitize=address")
-
 set(CMAKE_BUILD_TYPE Debug)
+
+find_library(caplib "../libcapstone.so")
 
 # Add executable target from the source files
 add_executable(${PROJECT_NAME} ${SRC_FILES})
 
-# Optionally, add include directories if needed
-# include_directories(${SRC_DIR}/include)
-
+target_link_libraries(${PROJECT_NAME} PRIVATE "${caplib}")
