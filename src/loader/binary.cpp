@@ -1,6 +1,7 @@
 #include "binary.hpp"
 #include <cassert>
 
+// Constructor
 Binary::Binary(std::string path) {
     // Load file
     name = path;
@@ -36,69 +37,29 @@ void Binary::loadSections() {
     header = (Elf32_Ehdr*)mapped_ptr;
     code_ptr = nullptr;
 
-    // Read program header ptrs
-    Elf32_Phdr* start = (Elf32_Phdr*)(mapped_ptr + header->e_phoff);
-    for (int i = 0; i < header->e_phnum; i++) {
-        phdrs.push_back(&start[i]);
-    }
-
-    // Read section header ptrs
-    Elf32_Shdr* start2 = (Elf32_Shdr*)(mapped_ptr + header->e_shoff);
-    Elf32_Shdr *symtab_shdr = NULL;
-    Elf32_Shdr *strtab_shdr = NULL;
-    // Also identify symbol and string table locations
+    // We have our Elf header and index for where the shstrndx is.
+    Elf32_Shdr section_string_table = ((Elf32_Shdr*)((mapped_ptr + header->e_shoff)))[header->e_shstrndx];
+    // base + e_shoff is start of section header table
+    // ^ at index e_shstrndx is the shstrtab SECTION (not data)
+    shstrtab = new char[section_string_table.sh_size];
+    memcpy(shstrtab, mapped_ptr + section_string_table.sh_offset, section_string_table.sh_size);
+    // Populate our map
+    Elf32_Shdr* ptr = (Elf32_Shdr*)(mapped_ptr + header->e_shoff);
     for (int i = 0; i < header->e_shnum; i++) {
-        shdrs.push_back(&start2[i]);
-        if (start2[i].sh_type == SHT_SYMTAB)
-            symtab_shdr = &start2[i];
-        if (start2[i].sh_type == SHT_STRTAB)
-            strtab_shdr = &start2[i];
+        const char* s = shstrtab + ptr[i].sh_name;
+        std::string name = std::string(s);
+        section_map.emplace(name, &ptr[i]);
     }
+    code_ptr = (mapped_ptr + section_map[".text"]->sh_offset);
+}
 
-    // Populate string table
-    if (strtab_shdr) {
-        char* strtabb = (char*)(mapped_ptr + strtab_shdr->sh_offset);
-        // Beautiful...
-        for (int i = 0; i <= strtab_shdr->sh_size;) {
-            strtab.push_back(std::string(strtabb));
-            strtabb += strtab.back().size() + 1;
-            i += strtab.back().size() + 1;
-        }
-        // Dump string table
-        for (size_t i = 0; i < strtab.size(); i++) {
-            println("strtab[%ld]: \'%s\'", i, strtab[i].c_str());
-        }
-    } else {
-        println("No string table section found!");
+// Dump out brief section information
+void Binary::dumpSections() {
+    println("\n[NUM]\t[NAME]\t\t[SIZE]\t\t[OFFSET]\t\t[ADDRESS]");
+    for (int i = 0; i < header->e_shnum; i++) {
+        int nameIdx = ((Elf32_Shdr*)(mapped_ptr + header->e_shoff))[i].sh_name;
+        std::string name = std::string((const char*)(shstrtab + nameIdx));
+        Elf32_Shdr* ptr = section_map[name];
+        println("[%d] - %-15s\tSIZE: 0x%-6x\tOFFSET: 0x%-6x\tADDR: 0x%x", i, name.c_str(), ptr->sh_size, ptr->sh_offset, ptr->sh_addr);
     }
-
-    // Grab index into strtab for ".text"
-    uint32_t idx = 0;
-    for (std::string& s : strtab) {
-        if (s == ".text") break;
-        else {
-            idx += s.size() + 1;
-        }
-    }
-    // Grab offset for .text
-    for (Elf32_Shdr* p : shdrs) {
-        if (p->sh_name == idx) {
-            code_ptr = mapped_ptr + p->sh_offset;
-            code_size = p->sh_size;
-            break;
-        }
-    }
-
-    // Populate symbol table
-    if (symtab_shdr) {
-        Elf32_Sym* ptr = (Elf32_Sym*)(mapped_ptr + symtab_shdr->sh_offset);
-        size_t num_symbols = symtab_shdr->sh_size / sizeof(Elf32_Sym);
-        for (size_t i = 0; i < num_symbols; i++) {
-            symtab.push_back(&ptr[i]);
-        }
-    } else {
-        println("No symbol table section found!");
-    }
-
-    assert(code_ptr);
 }

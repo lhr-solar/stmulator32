@@ -9,6 +9,7 @@ int main(int argc, char** argv) {
 
     println("Initializing STMulator...");
     Binary b(argv[1]);
+    b.dumpSections();
 
     return 0;
 }
