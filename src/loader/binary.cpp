@@ -64,6 +64,10 @@ void Binary::loadSections() {
             strtabb += strtab.back().size() + 1;
             i += strtab.back().size() + 1;
         }
+        // Dump string table
+        for (size_t i = 0; i < strtab.size(); i++) {
+            println("strtab[%ld]: \'%s\'", i, strtab[i].c_str());
+        }
     } else {
         println("No string table section found!");
     }
