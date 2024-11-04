@@ -1,5 +1,5 @@
 # stmulator32
-Pronounced "Stimulator" for STM-Simulator. Being developed for e-team purposes in hopes of accurately emulating the STM32 processors used on boards.
+Pronounced "Stemulator" for STM-Simulator. Being developed for e-team purposes in hopes of accurately emulating the STM32 processors used on boards.
 
 # Timeline
 - [x] Read and parse ARM assembly from raw .bin files
