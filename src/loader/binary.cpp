@@ -43,6 +43,7 @@ void Binary::loadSections() {
     // ^ at index e_shstrndx is the shstrtab SECTION (not data)
     shstrtab = new char[section_string_table.sh_size];
     memcpy(shstrtab, mapped_ptr + section_string_table.sh_offset, section_string_table.sh_size);
+    
     // Populate our map
     Elf32_Shdr* ptr = (Elf32_Shdr*)(mapped_ptr + header->e_shoff);
     for (int i = 0; i < header->e_shnum; i++) {

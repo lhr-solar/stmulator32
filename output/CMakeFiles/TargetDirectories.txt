@@ -1,3 +1,8 @@
-/root/stmulator32/output/CMakeFiles/stmulator.dir
-/root/stmulator32/output/CMakeFiles/edit_cache.dir
-/root/stmulator32/output/CMakeFiles/rebuild_cache.dir
+/home/ishdeshpa/Work/lhrs/stmulator32/output/CMakeFiles/stmulator.dir
+/home/ishdeshpa/Work/lhrs/stmulator32/output/CMakeFiles/edit_cache.dir
+/home/ishdeshpa/Work/lhrs/stmulator32/output/CMakeFiles/rebuild_cache.dir
+/home/ishdeshpa/Work/lhrs/stmulator32/output/capstone_build/CMakeFiles/capstone.dir
+/home/ishdeshpa/Work/lhrs/stmulator32/output/capstone_build/CMakeFiles/capstone_static.dir
+/home/ishdeshpa/Work/lhrs/stmulator32/output/capstone_build/CMakeFiles/fuzz_disasm.dir
+/home/ishdeshpa/Work/lhrs/stmulator32/output/capstone_build/CMakeFiles/edit_cache.dir
+/home/ishdeshpa/Work/lhrs/stmulator32/output/capstone_build/CMakeFiles/rebuild_cache.dir

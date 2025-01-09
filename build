@@ -1,6 +1,7 @@
 #!/bin/bash
+cmake -B output -S .
+cmake --build output
+
 cd output
-make clean
-cmake .
 make -j32
-cd ../
+cd ..
