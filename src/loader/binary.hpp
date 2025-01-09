@@ -1,6 +1,9 @@
 #pragma once
 
 #include "../common.hpp"
+#include "../engine/instructions.hpp"
+
+#include <cstdint>
 #include <elf.h>
 #include <sys/mman.h>
 #include <sys/stat.h>
@@ -8,7 +11,6 @@
 #include <map>
 
 class Binary {
-
 private:
     FILE* file; // file ptr
     std::string name; // elf name
@@ -18,15 +20,19 @@ private:
     char* shstrtab;
 
     void loadSections();
+    bool loadInstructions();
 
 public:
     uint8_t* mapped_ptr; // mmap location of entire file
     uint8_t* code_ptr;
     uint32_t code_size;
     Elf32_Ehdr* header;
+
+    std::vector<Instruction&> instructions;
     
     Binary(std::string path);
-    ~Binary() { fclose(file); munmap(mapped_ptr, size); delete[] shstrtab; }
+    ~Binary() { fclose(file); munmap(mapped_ptr, size); delete[] shstrtab;}
 
     void dumpSections();
+    void dumpInstructions();
 };

@@ -1,4 +1,6 @@
 #include "binary.hpp"
+#include "../engine/instructions.hpp"
+
 #include <cassert>
 
 // Constructor
@@ -25,11 +27,13 @@ Binary::Binary(std::string path) {
 
     // Load all the section headers
     loadSections();
-
     println("Section headers: %d", header->e_shnum);
     println("Program headers: %d", header->e_phnum);
     println("Mapped binary @ %p", mapped_ptr);
     println("Code pointer @ %p", code_ptr);
+
+    loadInstructions();
+    println("Instructions: %d", instructions.size());
 }
 
 // Load all section and program headers from our ELF
@@ -54,6 +58,25 @@ void Binary::loadSections() {
     code_ptr = (mapped_ptr + section_map[".text"]->sh_offset);
 }
 
+bool Binary::loadInstructions(){
+    csh handle;
+    cs_insn *insn;
+    if (cs_open(CS_ARCH_ARM, CS_MODE_THUMB, &handle) != CS_ERR_OK) return false;
+
+    cs_option(handle, CS_OPT_DETAIL, CS_OPT_ON);
+    
+    size_t count = cs_disasm(handle, (uint8_t*)this->code_ptr, this->code_size, 0x80001d8, 0, &insn);
+    printf("Count: %zu\n", count);
+    
+    for(size_t i=0; i<count; i++){
+        Instruction instr(&insn[i], insn[i].detail);
+        instructions.push_back(instr);
+        printf("0x%" PRIx64 ":\t%s\t\t%s\n", insn[i].address, insn[i].mnemonic, insn[i].op_str);
+    }
+    cs_free(insn, count);
+    cs_close(&handle);
+}
+
 // Dump out brief section information
 void Binary::dumpSections() {
     println("\n[NUM]\t[NAME]\t\t[SIZE]\t\t[OFFSET]\t\t[ADDRESS]");
@@ -62,5 +85,11 @@ void Binary::dumpSections() {
         std::string name = std::string((const char*)(shstrtab + nameIdx));
         Elf32_Shdr* ptr = section_map[name];
         println("[%d] - %-15s\tSIZE: 0x%-6x\tOFFSET: 0x%-6x\tADDR: 0x%x", i, name.c_str(), ptr->sh_size, ptr->sh_offset, ptr->sh_addr);
+    }
+}
+
+void Binary::dumpInstructions() {
+    for (auto& i : instructions) {
+        println("0x%x: %s %s", i.insn->address, i.insn->mnemonic, i.insn->op_str);
     }
 }
