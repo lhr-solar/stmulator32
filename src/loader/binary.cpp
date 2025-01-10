@@ -1,3 +1,4 @@
+#include "../engine/architecture.hpp"
 #include "../utils.hpp"
 #include "binary.hpp"
 #include "../engine/instructions.hpp"
@@ -33,15 +34,14 @@ Binary::Binary(std::string path) {
     println("Section headers: %d", header->e_shnum);
     println("Program headers: %d", header->e_phnum);
     println("Mapped binary @ %p", mapped_ptr);
-    println("Code pointer @ %p", code_ptr);
+    // println("Code pointer @ %p", code_ptr);
 
-    loadInstructions();
+    // loadInstructions();
 }
 
 // Load all section and program headers from our ELF
 void Binary::loadSections() {
     header = (Elf32_Ehdr*)mapped_ptr;
-    this->code_ptr = nullptr;
 
     // We have our Elf header and index for where the shstrndx is.
     Elf32_Shdr section_string_table = ((Elf32_Shdr*)((mapped_ptr + header->e_shoff)))[header->e_shstrndx];
@@ -57,34 +57,47 @@ void Binary::loadSections() {
         std::string name = std::string(s);
         section_map.emplace(name, &ptr[i]);
     }
-    this->code_ptr = (mapped_ptr + section_map[".text"]->sh_offset);
-    this->code_size = section_map[".text"]->sh_size;
-    this->code_addr = section_map[".text"]->sh_addr;
+
+    // Unmap elf
+    // munmap(mapped_ptr, size);
+
+    // this->code_ptr = (mapped_ptr + section_map[".text"]->sh_offset);
+    // this->code_size = section_map[".text"]->sh_size;
+    // this->code_addr = section_map[".text"]->sh_addr;
 }
 
-bool Binary::loadInstructions(){
-    csh handle;
-    if (cs_open(CS_ARCH_ARM, (cs_mode)(CS_MODE_THUMB|CS_MODE_MCLASS), &handle) != CS_ERR_OK) return false;
-
-    cs_option(handle, CS_OPT_DETAIL, CS_OPT_ON);
-    cs_option(handle, CS_OPT_SKIPDATA, CS_OPT_ON);
-    
-    cs_insn* insn;
-    size_t count = cs_disasm(handle, this->code_ptr, this->code_size, this->code_addr, 0, &insn);
-
-    if (count > 0) {
-        this->instruction_count = count;
-        this->instructions = insn;
-    } else {
-        println("Failed to disassemble");
-        return false;
+void Binary::loadMemory(Memory &mem){
+    // Load memory with sections
+    for (auto it = section_map.begin(); it != section_map.end(); it++) {
+        Elf32_Shdr* section = it->second;
+        if(section->sh_addr == 0) continue;
+        mem.write(section->sh_addr, mapped_ptr + section->sh_offset, section->sh_size);
     }
-
-    println("Disassembled %d instructions.", count);
-    cs_close(&handle);
-    
-    return true;
 }
+
+// bool Binary::loadInstructions(){
+//     csh handle;
+//     if (cs_open(CS_ARCH_ARM, (cs_mode)(CS_MODE_THUMB|CS_MODE_MCLASS), &handle) != CS_ERR_OK) return false;
+
+//     cs_option(handle, CS_OPT_DETAIL, CS_OPT_ON);
+//     cs_option(handle, CS_OPT_SKIPDATA, CS_OPT_ON);
+    
+//     cs_insn* insn;
+//     size_t count = cs_disasm(handle, this->code_ptr, this->code_size, this->code_addr, 0, &insn);
+
+//     if (count > 0) {
+//         this->instruction_count = count;
+//         this->instructions = insn;
+//     } else {
+//         println("Failed to disassemble");
+//         return false;
+//     }
+
+//     println("Disassembled %d instructions.", count);
+//     cs_close(&handle);
+    
+//     return true;
+// }
 
 // Dump out brief section information
 void Binary::dumpSections() {
@@ -97,8 +110,8 @@ void Binary::dumpSections() {
     }
 }
 
-void Binary::dumpInstructions() {
-    for (size_t i = 0; i < instruction_count; i++) {
-        println("0x%x: %s %s", instructions[i].address, instructions[i].mnemonic, instructions[i].op_str);
-    }
-}
+// void Binary::dumpInstructions() {
+//     for (size_t i = 0; i < instruction_count; i++) {
+//         println("0x%x: %s %s", instructions[i].address, instructions[i].mnemonic, instructions[i].op_str);
+//     }
+// }

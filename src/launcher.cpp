@@ -1,5 +1,7 @@
 #include "utils.hpp"
 #include "loader/binary.hpp"
+#include "engine/architecture.hpp"
+
 #include <capstone/capstone.h>
 #include <assert.h>
 #include <inttypes.h>
@@ -11,9 +13,11 @@ int main(int argc, char** argv) {
     }
 
     println("Initializing STMulator...");
+    
     Binary b(argv[1]);
     b.dumpSections();
-    b.dumpInstructions();
+    
+    Architecture a(b);
 
     return 0;
 }

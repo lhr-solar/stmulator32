@@ -1,5 +1,6 @@
 #pragma once
 
+#include "../loader/binary.hpp"
 #include <bitset>
 
 // Need to define register file and flags
@@ -24,8 +25,31 @@ typedef enum {
     NUM_REGS
 } regs;
 
-// Regfile
-extern int32_t regfile[];
+class Memory {
+private:
+    size_t size;
+public:
+    Memory(size_t size) : size(size) {
+        // Create file for memory model
+        FILE *memfile = fopen("memfile", "w");
+        fseek(memfile, size, SEEK_SET);
+        fputc(0, memfile);
+        fclose(memfile);
+    }
 
-// Update system flags based on input value.
-void updateFlags(int32_t result, bool overflow = false);
+    bool read(uint32_t addr, void *data, size_t size);
+    bool write(uint32_t addr, void *data, size_t size);
+};
+
+class Binary;
+class Architecture {
+public:    
+    int32_t regfile[NUM_REGS];
+    Memory mem;
+
+    void init(Binary &binary);
+
+    Architecture(Binary &binary) : mem(0xFFFFFFFF) {
+        init(binary);
+    }
+};
