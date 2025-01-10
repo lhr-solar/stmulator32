@@ -67,18 +67,23 @@ bool Binary::loadInstructions(){
     if (cs_open(CS_ARCH_ARM, (cs_mode)(CS_MODE_THUMB|CS_MODE_MCLASS), &handle) != CS_ERR_OK) return false;
 
     cs_option(handle, CS_OPT_DETAIL, CS_OPT_ON);
+    cs_option(handle, CS_OPT_SKIPDATA, CS_OPT_ON);
     
     cs_insn* insn;
     size_t count = cs_disasm(handle, this->code_ptr, this->code_size, this->code_addr, 0, &insn);
-    println("Disassembled %d instructions", count);
+
     if (count > 0) {
-        for (size_t i = 0; i < count; i++) {
-            println("0x%x: %s %s", insn[i].address, insn[i].mnemonic, insn[i].op_str);
-        }
-        cs_free(insn, count);
+        this->instruction_count = count;
+        this->instructions = insn;
     } else {
         println("Failed to disassemble");
+        return false;
     }
+
+    println("Disassembled %d instructions.", count);
+    cs_close(&handle);
+    
+    return true;
 }
 
 // Dump out brief section information
@@ -93,7 +98,7 @@ void Binary::dumpSections() {
 }
 
 void Binary::dumpInstructions() {
-    // for () {
-    //     println("0x%x: %s %s", i.insn->address, i.insn->mnemonic, i.insn->op_str);
-    // }
+    for (size_t i = 0; i < instruction_count; i++) {
+        println("0x%x: %s %s", instructions[i].address, instructions[i].mnemonic, instructions[i].op_str);
+    }
 }

@@ -30,9 +30,10 @@ public:
     Elf32_Ehdr* header;
 
     cs_insn* instructions;
+    size_t instruction_count;
     
     Binary(std::string path);
-    ~Binary() { fclose(file); munmap(mapped_ptr, size); delete[] shstrtab;}
+    ~Binary() { fclose(file); munmap(mapped_ptr, size); delete[] shstrtab; cs_free(instructions, instruction_count);}
 
     void dumpSections();
     void dumpInstructions();
