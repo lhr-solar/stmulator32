@@ -1,4 +1,2 @@
 #!/bin/bash
-cd output
-make clean
-cd ..
+rm -rf output/*

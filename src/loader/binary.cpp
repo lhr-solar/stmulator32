@@ -1,6 +1,9 @@
+#include "../utils.hpp"
 #include "binary.hpp"
 #include "../engine/instructions.hpp"
 
+#include <vector>
+#include <string>
 #include <cassert>
 
 // Constructor
@@ -33,13 +36,12 @@ Binary::Binary(std::string path) {
     println("Code pointer @ %p", code_ptr);
 
     loadInstructions();
-    println("Instructions: %d", instructions.size());
 }
 
 // Load all section and program headers from our ELF
 void Binary::loadSections() {
     header = (Elf32_Ehdr*)mapped_ptr;
-    code_ptr = nullptr;
+    this->code_ptr = nullptr;
 
     // We have our Elf header and index for where the shstrndx is.
     Elf32_Shdr section_string_table = ((Elf32_Shdr*)((mapped_ptr + header->e_shoff)))[header->e_shstrndx];
@@ -55,26 +57,28 @@ void Binary::loadSections() {
         std::string name = std::string(s);
         section_map.emplace(name, &ptr[i]);
     }
-    code_ptr = (mapped_ptr + section_map[".text"]->sh_offset);
+    this->code_ptr = (mapped_ptr + section_map[".text"]->sh_offset);
+    this->code_size = section_map[".text"]->sh_size;
+    this->code_addr = section_map[".text"]->sh_addr;
 }
 
 bool Binary::loadInstructions(){
     csh handle;
-    cs_insn *insn;
-    if (cs_open(CS_ARCH_ARM, CS_MODE_THUMB, &handle) != CS_ERR_OK) return false;
+    if (cs_open(CS_ARCH_ARM, (cs_mode)(CS_MODE_THUMB|CS_MODE_MCLASS), &handle) != CS_ERR_OK) return false;
 
     cs_option(handle, CS_OPT_DETAIL, CS_OPT_ON);
     
-    size_t count = cs_disasm(handle, (uint8_t*)this->code_ptr, this->code_size, 0x80001d8, 0, &insn);
-    printf("Count: %zu\n", count);
-    
-    for(size_t i=0; i<count; i++){
-        Instruction instr(&insn[i], insn[i].detail);
-        instructions.push_back(instr);
-        printf("0x%" PRIx64 ":\t%s\t\t%s\n", insn[i].address, insn[i].mnemonic, insn[i].op_str);
+    cs_insn* insn;
+    size_t count = cs_disasm(handle, this->code_ptr, this->code_size, this->code_addr, 0, &insn);
+    println("Disassembled %d instructions", count);
+    if (count > 0) {
+        for (size_t i = 0; i < count; i++) {
+            println("0x%x: %s %s", insn[i].address, insn[i].mnemonic, insn[i].op_str);
+        }
+        cs_free(insn, count);
+    } else {
+        println("Failed to disassemble");
     }
-    cs_free(insn, count);
-    cs_close(&handle);
 }
 
 // Dump out brief section information
@@ -89,7 +93,7 @@ void Binary::dumpSections() {
 }
 
 void Binary::dumpInstructions() {
-    for (auto& i : instructions) {
-        println("0x%x: %s %s", i.insn->address, i.insn->mnemonic, i.insn->op_str);
-    }
+    // for () {
+    //     println("0x%x: %s %s", i.insn->address, i.insn->mnemonic, i.insn->op_str);
+    // }
 }

@@ -1,6 +1,5 @@
 #pragma once
 
-#include "../common.hpp"
 #include <bitset>
 
 // Need to define register file and flags

@@ -5,8 +5,5 @@
 #include <stdarg.h>
 
 #define println(x, ...)  \
-    {   \
     printf(x, ##__VA_ARGS__);   \
-    printf("\n");   \
-    }   \
-
+    printf("\n");

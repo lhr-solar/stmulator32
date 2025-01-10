@@ -1,8 +1,8 @@
 #pragma once
 
-#include "../common.hpp"
 #include "../engine/instructions.hpp"
 
+#include <vector>
 #include <cstdint>
 #include <elf.h>
 #include <sys/mman.h>
@@ -25,10 +25,11 @@ private:
 public:
     uint8_t* mapped_ptr; // mmap location of entire file
     uint8_t* code_ptr;
-    uint32_t code_size;
+    size_t code_size;
+    uint32_t code_addr;
     Elf32_Ehdr* header;
 
-    std::vector<Instruction&> instructions;
+    cs_insn* instructions;
     
     Binary(std::string path);
     ~Binary() { fclose(file); munmap(mapped_ptr, size); delete[] shstrtab;}
