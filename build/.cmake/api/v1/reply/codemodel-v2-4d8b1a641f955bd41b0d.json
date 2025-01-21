@@ -1,0 +1,120 @@
+{
+	"configurations" : 
+	[
+		{
+			"directories" : 
+			[
+				{
+					"build" : ".",
+					"childIndexes" : 
+					[
+						1
+					],
+					"jsonFile" : "directory-.-Debug-f5ebdc15457944623624.json",
+					"minimumCMakeVersion" : 
+					{
+						"string" : "3.10"
+					},
+					"projectIndex" : 0,
+					"source" : ".",
+					"targetIndexes" : 
+					[
+						3
+					]
+				},
+				{
+					"build" : "capstone_build",
+					"jsonFile" : "directory-capstone_build-Debug-f02e7f5ac2eebeb2b0a5.json",
+					"minimumCMakeVersion" : 
+					{
+						"string" : "3.15"
+					},
+					"parentIndex" : 0,
+					"projectIndex" : 1,
+					"source" : "capstone",
+					"targetIndexes" : 
+					[
+						0,
+						1,
+						2
+					]
+				}
+			],
+			"name" : "Debug",
+			"projects" : 
+			[
+				{
+					"childIndexes" : 
+					[
+						1
+					],
+					"directoryIndexes" : 
+					[
+						0
+					],
+					"name" : "stmulator",
+					"targetIndexes" : 
+					[
+						3
+					]
+				},
+				{
+					"directoryIndexes" : 
+					[
+						1
+					],
+					"name" : "capstone",
+					"parentIndex" : 0,
+					"targetIndexes" : 
+					[
+						0,
+						1,
+						2
+					]
+				}
+			],
+			"targets" : 
+			[
+				{
+					"directoryIndex" : 1,
+					"id" : "capstone::@7a1500df8fb0526910c1",
+					"jsonFile" : "target-capstone-Debug-8e76e998d366f40fa05b.json",
+					"name" : "capstone",
+					"projectIndex" : 1
+				},
+				{
+					"directoryIndex" : 1,
+					"id" : "capstone_static::@7a1500df8fb0526910c1",
+					"jsonFile" : "target-capstone_static-Debug-ec287085985bbebd4c4a.json",
+					"name" : "capstone_static",
+					"projectIndex" : 1
+				},
+				{
+					"directoryIndex" : 1,
+					"id" : "fuzz_disasm::@7a1500df8fb0526910c1",
+					"jsonFile" : "target-fuzz_disasm-Debug-bcbbe190231fdb4d9128.json",
+					"name" : "fuzz_disasm",
+					"projectIndex" : 1
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "stmulator::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-stmulator-Debug-69446b83a36fadd397d8.json",
+					"name" : "stmulator",
+					"projectIndex" : 0
+				}
+			]
+		}
+	],
+	"kind" : "codemodel",
+	"paths" : 
+	{
+		"build" : "/home/ishdeshpa/Work/lhrs/stmulator32/build",
+		"source" : "/home/ishdeshpa/Work/lhrs/stmulator32"
+	},
+	"version" : 
+	{
+		"major" : 2,
+		"minor" : 7
+	}
+}

@@ -1,7 +1,7 @@
 #pragma once
 
-#include "../engine/instructions.hpp"
-#include "../engine/architecture.hpp"
+#include "instructions.hpp"
+#include "architecture.hpp"
 
 #include <vector>
 #include <string>
@@ -12,7 +12,7 @@
 #include <fcntl.h>
 #include <map>
 
-class Memory;
+class MemoryModel;
 class Binary {
 private:
     FILE* file; // file ptr
@@ -23,25 +23,16 @@ private:
     char* shstrtab;
 
     void loadSections();
-    // bool loadInstructions();
-
 public:
     uint8_t* mapped_ptr; // mmap location of entire file
-    
-    // uint8_t* code_ptr;
-    // size_t code_size;
-    // uint32_t code_addr;
-    
     Elf32_Ehdr* header;
 
-    // cs_insn* instructions;
-    // size_t instruction_count;
-    
     Binary(std::string path);
     ~Binary() { fclose(file); munmap(mapped_ptr, size); delete[] shstrtab; /*cs_free(instructions, instruction_count);*/}
 
-    void loadMemory(Memory &mem);
+    // iterator for sections
+    std::map<std::string, Elf32_Shdr*>::iterator begin() { return section_map.begin(); }
+    std::map<std::string, Elf32_Shdr*>::iterator end() { return section_map.end(); }
 
     void dumpSections();
-    // void dumpInstructions();
 };

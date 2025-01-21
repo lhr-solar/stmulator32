@@ -1,0 +1,374 @@
+{
+	"artifacts" : 
+	[
+		{
+			"path" : "capstone_build/fuzz_disasm"
+		}
+	],
+	"backtrace" : 1,
+	"backtraceGraph" : 
+	{
+		"commands" : 
+		[
+			"add_executable",
+			"target_link_libraries",
+			"add_compile_options",
+			"add_definitions",
+			"include_directories"
+		],
+		"files" : 
+		[
+			"capstone/CMakeLists.txt",
+			"CMakeLists.txt"
+		],
+		"nodes" : 
+		[
+			{
+				"file" : 0
+			},
+			{
+				"command" : 0,
+				"file" : 0,
+				"line" : 810,
+				"parent" : 0
+			},
+			{
+				"command" : 1,
+				"file" : 0,
+				"line" : 811,
+				"parent" : 0
+			},
+			{
+				"command" : 2,
+				"file" : 0,
+				"line" : 58,
+				"parent" : 0
+			},
+			{
+				"command" : 3,
+				"file" : 0,
+				"line" : 151,
+				"parent" : 0
+			},
+			{
+				"command" : 3,
+				"file" : 0,
+				"line" : 165,
+				"parent" : 0
+			},
+			{
+				"command" : 3,
+				"file" : 0,
+				"line" : 233,
+				"parent" : 0
+			},
+			{
+				"command" : 3,
+				"file" : 0,
+				"line" : 140,
+				"parent" : 0
+			},
+			{
+				"file" : 1
+			},
+			{
+				"command" : 4,
+				"file" : 1,
+				"line" : 30,
+				"parent" : 8
+			},
+			{
+				"command" : 4,
+				"file" : 1,
+				"line" : 35,
+				"parent" : 8
+			},
+			{
+				"command" : 4,
+				"file" : 1,
+				"line" : 35,
+				"parent" : 8
+			}
+		]
+	},
+	"compileGroups" : 
+	[
+		{
+			"compileCommandFragments" : 
+			[
+				{
+					"fragment" : "-g"
+				},
+				{
+					"backtrace" : 3,
+					"fragment" : "-Werror"
+				},
+				{
+					"backtrace" : 3,
+					"fragment" : "-Wall"
+				},
+				{
+					"backtrace" : 3,
+					"fragment" : "-Warray-bounds"
+				},
+				{
+					"backtrace" : 3,
+					"fragment" : "-Wshift-negative-value"
+				},
+				{
+					"backtrace" : 3,
+					"fragment" : "-Wreturn-type"
+				},
+				{
+					"backtrace" : 3,
+					"fragment" : "-Wformat"
+				},
+				{
+					"backtrace" : 3,
+					"fragment" : "-Wmissing-braces"
+				},
+				{
+					"backtrace" : 3,
+					"fragment" : "-Wunused-function"
+				},
+				{
+					"backtrace" : 3,
+					"fragment" : "-Wunused-variable"
+				},
+				{
+					"backtrace" : 3,
+					"fragment" : "-Wparentheses"
+				},
+				{
+					"backtrace" : 3,
+					"fragment" : "-Wint-in-bool-context"
+				},
+				{
+					"backtrace" : 3,
+					"fragment" : "-Wmisleading-indentation"
+				},
+				{
+					"backtrace" : 3,
+					"fragment" : "-Wno-maybe-uninitialized"
+				},
+				{
+					"backtrace" : 3,
+					"fragment" : "-Wshadow=local"
+				}
+			],
+			"defines" : 
+			[
+				{
+					"backtrace" : 4,
+					"define" : "CAPSTONE_ARM_SUPPORT"
+				},
+				{
+					"backtrace" : 5,
+					"define" : "CAPSTONE_DEBUG"
+				},
+				{
+					"backtrace" : 6,
+					"define" : "CAPSTONE_HAS_ARM"
+				},
+				{
+					"backtrace" : 7,
+					"define" : "CAPSTONE_USE_SYS_DYN_MEM"
+				}
+			],
+			"includes" : 
+			[
+				{
+					"backtrace" : 9,
+					"path" : "/home/ishdeshpa/Work/lhrs/stmulator32/src"
+				},
+				{
+					"backtrace" : 10,
+					"path" : "/home/ishdeshpa/Work/lhrs/stmulator32/src/engine"
+				},
+				{
+					"backtrace" : 11,
+					"path" : "/home/ishdeshpa/Work/lhrs/stmulator32/src/loader"
+				},
+				{
+					"backtrace" : 2,
+					"path" : "/home/ishdeshpa/Work/lhrs/stmulator32/capstone/include"
+				}
+			],
+			"language" : "C",
+			"sourceIndexes" : 
+			[
+				0,
+				1,
+				2
+			]
+		}
+	],
+	"dependencies" : 
+	[
+		{
+			"backtrace" : 2,
+			"id" : "capstone::@7a1500df8fb0526910c1"
+		}
+	],
+	"id" : "fuzz_disasm::@7a1500df8fb0526910c1",
+	"link" : 
+	{
+		"commandFragments" : 
+		[
+			{
+				"fragment" : "-g",
+				"role" : "flags"
+			},
+			{
+				"fragment" : "",
+				"role" : "flags"
+			}
+		],
+		"language" : "C"
+	},
+	"name" : "fuzz_disasm",
+	"nameOnDisk" : "fuzz_disasm",
+	"paths" : 
+	{
+		"build" : "capstone_build",
+		"source" : "capstone"
+	},
+	"sourceGroups" : 
+	[
+		{
+			"name" : "Source Files",
+			"sourceIndexes" : 
+			[
+				0,
+				1,
+				2
+			]
+		},
+		{
+			"name" : "Object Libraries",
+			"sourceIndexes" : 
+			[
+				3,
+				4,
+				5,
+				6,
+				7,
+				8,
+				9,
+				10,
+				11,
+				12,
+				13,
+				14,
+				15,
+				16
+			]
+		}
+	],
+	"sources" : 
+	[
+		{
+			"backtrace" : 1,
+			"compileGroupIndex" : 0,
+			"path" : "capstone/suite/fuzz/onefile.c",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 1,
+			"compileGroupIndex" : 0,
+			"path" : "capstone/suite/fuzz/fuzz_disasm.c",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 1,
+			"compileGroupIndex" : 0,
+			"path" : "capstone/suite/fuzz/platform.c",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 2,
+			"isGenerated" : true,
+			"path" : "build/capstone_build/CMakeFiles/capstone.dir/cs.c.o",
+			"sourceGroupIndex" : 1
+		},
+		{
+			"backtrace" : 2,
+			"isGenerated" : true,
+			"path" : "build/capstone_build/CMakeFiles/capstone.dir/Mapping.c.o",
+			"sourceGroupIndex" : 1
+		},
+		{
+			"backtrace" : 2,
+			"isGenerated" : true,
+			"path" : "build/capstone_build/CMakeFiles/capstone.dir/MCInst.c.o",
+			"sourceGroupIndex" : 1
+		},
+		{
+			"backtrace" : 2,
+			"isGenerated" : true,
+			"path" : "build/capstone_build/CMakeFiles/capstone.dir/MCInstrDesc.c.o",
+			"sourceGroupIndex" : 1
+		},
+		{
+			"backtrace" : 2,
+			"isGenerated" : true,
+			"path" : "build/capstone_build/CMakeFiles/capstone.dir/MCInstPrinter.c.o",
+			"sourceGroupIndex" : 1
+		},
+		{
+			"backtrace" : 2,
+			"isGenerated" : true,
+			"path" : "build/capstone_build/CMakeFiles/capstone.dir/MCRegisterInfo.c.o",
+			"sourceGroupIndex" : 1
+		},
+		{
+			"backtrace" : 2,
+			"isGenerated" : true,
+			"path" : "build/capstone_build/CMakeFiles/capstone.dir/SStream.c.o",
+			"sourceGroupIndex" : 1
+		},
+		{
+			"backtrace" : 2,
+			"isGenerated" : true,
+			"path" : "build/capstone_build/CMakeFiles/capstone.dir/utils.c.o",
+			"sourceGroupIndex" : 1
+		},
+		{
+			"backtrace" : 2,
+			"isGenerated" : true,
+			"path" : "build/capstone_build/CMakeFiles/capstone.dir/arch/ARM/ARMBaseInfo.c.o",
+			"sourceGroupIndex" : 1
+		},
+		{
+			"backtrace" : 2,
+			"isGenerated" : true,
+			"path" : "build/capstone_build/CMakeFiles/capstone.dir/arch/ARM/ARMDisassembler.c.o",
+			"sourceGroupIndex" : 1
+		},
+		{
+			"backtrace" : 2,
+			"isGenerated" : true,
+			"path" : "build/capstone_build/CMakeFiles/capstone.dir/arch/ARM/ARMDisassemblerExtension.c.o",
+			"sourceGroupIndex" : 1
+		},
+		{
+			"backtrace" : 2,
+			"isGenerated" : true,
+			"path" : "build/capstone_build/CMakeFiles/capstone.dir/arch/ARM/ARMInstPrinter.c.o",
+			"sourceGroupIndex" : 1
+		},
+		{
+			"backtrace" : 2,
+			"isGenerated" : true,
+			"path" : "build/capstone_build/CMakeFiles/capstone.dir/arch/ARM/ARMMapping.c.o",
+			"sourceGroupIndex" : 1
+		},
+		{
+			"backtrace" : 2,
+			"isGenerated" : true,
+			"path" : "build/capstone_build/CMakeFiles/capstone.dir/arch/ARM/ARMModule.c.o",
+			"sourceGroupIndex" : 1
+		}
+	],
+	"type" : "EXECUTABLE"
+}

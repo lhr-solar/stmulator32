@@ -26,6 +26,16 @@ endif()
 # Specify an out-of-tree build directory for Capstone
 set(CAPSTONE_BUILD_DIR "${CMAKE_BINARY_DIR}/capstone_build")
 
+# Add the source directory to the list of include paths
+include_directories(${SRC_DIR})
+# Recursively add all subdirectories in SRC_DIR to the include paths
+file(GLOB INCLUDE_DIRS RELATIVE ${SRC_DIR} ${SRC_DIR}/*)
+foreach(dir ${INCLUDE_DIRS})
+    if(IS_DIRECTORY ${SRC_DIR}/${dir})
+        include_directories(${SRC_DIR}/${dir})
+    endif()
+endforeach()
+
 # Add executable target from the source files
 add_executable(${PROJECT_NAME} ${SRC_FILES})
 

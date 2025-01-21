@@ -17,7 +17,8 @@ int main(int argc, char** argv) {
     Binary b(argv[1]);
     b.dumpSections();
     
-    Architecture a(b);
+    Architecture arch;
+    arch.mem = new MemoryModel(b);
 
     return 0;
 }
